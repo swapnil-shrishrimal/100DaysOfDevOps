@@ -1,0 +1,11 @@
+# Day 1
+Create a user "swapnil" with non-interactive shell on remote server
+  a. ssh to required server using below command. The user used in below command is different compared to the one which is asked to create. It is assumed that password based authentication is enabled on the remote server.
+      ssh username@hostname OR
+      ssh username@ip_address
+  b. Once you execute one of above command, you will be prompted for a password of the username. Provide password and you will be authenticated to remote server.
+  c. Add new user using below command. Note that to create user with non-interactive use we will be using option -s (shell) reference https://manpages.org/useradd/8
+      useradd -s /bin/false swapnil OR
+      useradd -s /bin/nologin
+
+This way user "swapnil" will not be able to use interactive shell.
