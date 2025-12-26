@@ -1,0 +1,10 @@
+# Day 2
+Create a temporary user "swapuser" who will have access to server for limited period on a remote server. In this case, set expiry date to 2026-03-30
+  b. Login into remote server using below command
+      ssh username@hostname OR
+      ssh username@ip_address
+    Provide password once prompted.
+  a. Use below command to create user with time set to expire as 2026-03-30
+      useradd -e 2026-03-30 swapuser # Use sudo if elevated access is required. Option -e is used to set expiry date for user.
+  c. Confirm if expiry is set correctly by using below command
+      sudo chage -l swapuser  
