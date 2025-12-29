@@ -1,0 +1,13 @@
+Day 3
+#Disable ssh root login on remote server
+  a. login into remote linux server using ssh using below command
+      ssh username@hostname OR
+      ssh username@ip_address
+  b. edit sshd_config file present under /etc/ssh/ using any available editor. Here we are using vi editor using below command
+      sudo vi /etc/ssh/sshd_config
+  c. Once you open the file, look for property "PermitRootLogin". Either value for said property will be "yes" or the property itself will be commented. We need to update this property with value "no" as mentioned in next line
+      PermitRootLogin no
+  d. Save sshd_config file
+  e. Restart sshd service using below command
+      sudo systemctl restart sshd
+  f. Basically, setting PermitRootLogin as no we will disable root login using ssh.
