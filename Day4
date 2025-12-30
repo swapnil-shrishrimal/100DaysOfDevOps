@@ -1,0 +1,13 @@
+#Day4
+One shell script is placed under /tmp/ folder or remote machine. However, the script does not have executable permission yet. Task is to provide executable permission such that all users can execute the script.
+  a. Login into remote server using below command. Once prompted for password, provide required password for login.
+      ssh username@hostname OR
+      ssh username@ip_address
+  b. Change directory to where the script is located. In this case it is "/tmp"
+      cd /tmp/
+  c. Check for existing permission on the file by using ls command. In this case name of shell script is xfusioncorp.sh
+      ls -lart
+  d. Now to have executable permission through shell we need to have read and execute permission on file. We can provide permission using below command
+      sudo chmod 555 xfusioncorp.sh
+  e. The above command will provide required executable permissio to the shell script. You can verify it by executing shell script by different users.
+      ./xfusioncorp.sh  
