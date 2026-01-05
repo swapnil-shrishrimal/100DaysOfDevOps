@@ -1,0 +1,18 @@
+Day5
+# Disable SELinux as of now. If SELinux is not available then install it.
+  1. First login into remote server using below command
+      ssh username@host OR
+      ssh username@ip_address
+  2. Provide required password once prompted after above command.
+  3. Check if SELinux is available using either or below commands
+      sestatus OR
+      getenforce
+  4. If both of above command returns "No such command or file" then go to step next step else go to step 6
+  5. Install SELinux policies using below command (It is assumed that we are working with RedHat or CentOS based server here)
+      sudo yum install selinux-policy-targeted -y
+  6. Above command will install SELinux policy on the sever. Now, to disable SELinux policy edit config file under /etc/selinux/config using any editor. Here, we are using vi editor
+      sudo vi /etc/selinux/config
+  7. Look for SELINUX property and provide value to it as disabled like mentioned below
+      SELINUX=disabled
+  8. Save the file and reboot server to take enforce this policy on the server.
+  9. More on SELinux is available on https://www.redhat.com/en/topics/linux/what-is-selinux
