@@ -4,3 +4,4 @@ Documenting my learning from day 1 to day 100 as part of 100 days of DevOps lear
 [Day2](Day2) : Create user with time of expire set  
 [Day3](Day3) : Disable root login using SSH  
 [Day4](Day4) : To provide executable permission on shell script  
+[Day5](Day5) : Install SELinux and disable it    
