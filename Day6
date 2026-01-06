@@ -1,0 +1,29 @@
+Day6
+1. Install cronie package and start crond on remote server.
+2. Add a cron */5 * * * * echo hello > /tmp/cron_text for root user on remote server.
+
+    a. Login to remote server using ssh command as mentioned below
+        ssh username@hostname OR
+        ssh username@ip_address
+    b. Provide password once prompted after executing above command.
+    c. Install package cronie as requested using below command. (It is assumed that we are using CentOS or RHEL based OS)
+        sudo yum install cronie -y
+    d. Once package cronie is installed, start the crond service using below command
+        sudo systemctl start crond
+    e. Check service status of crond using below command. It is assumed that, service has started without any issues.
+        sudo systemctl status crond.
+    f. Next, we need to add a cronjob for root user where "hello" will be printed to a file "cron_text" at /tmp/ directory every 5 minutes. Using below command we can accomplish it.
+        sudo crontab -u root -e // We need to edit crontab hence option -e. The requirement is such that we need to do it for user root and hence option -u. Reference: https://man7.org/linux/man-pages/man5/crontab.5.html 
+    g. Crontab for root user will get open. If there are no previous creation of cronjob for root user then you will get blank crontab and if there were earlier cronjob for user root then you will see those cronjob once you hit above command.
+    h. Update below cronjob,
+        */5 * * * * echo hello > /tmp/cron_text // */5 denotes every 5 minutes For other options like month, year
+    i. Below are valid options, reference: https://man7.org/linux/man-pages/man5/crontab.5.html
+        field          allowed values
+        -----          --------------
+        minute         0-59
+        hour           0-23
+        day of month   1-31
+        month          1-12 (or names, see below)
+        day of week    0-7 (0 or 7 is Sunday, or use names)
+    j. Once you update and save things mentioned in point h, validate if cronjob has been scheduled using below command.
+        sudo crontab -u root -l
