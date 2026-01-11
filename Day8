@@ -1,0 +1,22 @@
+#Day8
+Install ansible 4.9.0 using pip3 only and make sure all users on server are able to use it.
+1. Use below command to install ansible version 4.9.0. Provide password once prompted.
+    sudo pip3 install "ansible==4.9.0"
+2. Once installation is complete, try to check if another user is able to use ansible using below command
+    ansible --version
+3. If you get error "command not found" then try below step to fix it.
+4. Check if ansible is installed correctly using below command
+    sudo which ansible
+5. take note of the path you got from above command.
+6. Now, using below command you can update secure_path section in visudo
+    sudo visudo
+7. Once editor is opened, search for secure_path section.
+8. Update secure_path property with below line
+      /sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin
+9. The secure_path will now look like below
+    # Example line in sudo visudo:
+    Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin
+10. Save and exit from editor.
+11. Restart shell using below command
+      source ./bashrc
+12. Now if you try "ansible --version" from any other user, you will not get any error and other users can now able to use ansible.
