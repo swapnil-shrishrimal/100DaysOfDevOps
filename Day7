@@ -1,0 +1,24 @@
+#Day 7
+Set up a password-less authentication from user thor on jump host to all app servers through their respective sudo users.
+
+Jump server:
+  A jump server (or bastion host, jump box) is a hardened, secure intermediary server used to access and manage other, more sensitive servers in a private network, acting as a controlled gateway between untrusted external networks and critical internal resources, preventing direct exposure of internal systems to the internet.
+
+1. To have password-less authentication for ssh login first we will need to generate ssh key pair. We can generate ssh key pair using below command. Make sure you are logged in on Jump server with user which as sudo access.
+    ssh-keygen
+2. The above command will prompt "Enter a file in which to save the key," You can keep default location and hit enter.
+3. Next, it will prompt for passphrase, press "Enter" twice to keep passphrase as empty for truly password-less experience. (note: adding a passphrase adds security, but requires using an SSH agent to avoid entering it every time)
+4. This command creates two files in your ~/.ssh directory: 
+    id_ed25519: your private key (keep this file secure and never share it).
+    id_ed25519.pub: your public key (this is the key you will share with servers).
+5. Next step is to copy public key to remote server where we. The easiest way is to use below command
+    ssh-copy-id username@hostname OR
+    ssh-copy-id username@ip_address
+You will be prompted for the remote user's password one last time. Once authenticated, the public key is automatically appended to the ~/.ssh/authorized_keys file on the remote server. 
+6. If ssh-copy-id is not available then we need to copy public key manually using below steps
+      cat ~/.ssh/id_ed25519.pub | ssh user@hostname-or-ip "mkdir -p ~/.ssh && chmod 700 ~/.ssh && cat >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
+7. You'll need to enter your password for this step. This command also ensures the correct file permissions are set on the remote side. 
+8. Final step is to validate if password-less authentication is working or not and that can be done using below command
+      ssh username@hostname OR
+      ssh username@ip_address
+If you get logged in without prompt asking for password then it means password-less authentication is working as expected. Else, you will need to revisit the steps again.
