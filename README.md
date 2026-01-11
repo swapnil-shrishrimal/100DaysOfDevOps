@@ -7,3 +7,4 @@ Documenting my learning from day 1 to day 100 as part of 100 days of DevOps lear
 [Day5](Day5) : Install SELinux and disable it    
 [Day6](Day6) : Install cronie and set up a cronjob for root user    
 [Day7](Day7) : Password-less authentication using SSH    
+[Day8](Day8) : Install Ansible 4.9.0 using Pip3 for all users    
