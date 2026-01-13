@@ -1,0 +1,61 @@
+#Day9
+Create a kubernetes deployment named httpd to deploy the application httpd using the image httpd:latest (ensure to specify the tag).
+
+1. To create kubernetes deployment, it is recommended (but not mandatory) to have kubectl utility.
+
+2. There are two option, fist with imperative command option which is using kubectl command directly and second is declarative YAML file (recommended for production).
+
+3. Let's check imperative command option in below mentioned example
+    kubectl create deployment NAME --image=image --replicas=NUMBER --port=CONTAINER_PORT
+
+Reference: https://kubernetes.io/docs/tutorials/kubernetes-basics/deploy-app/deploy-intro/ 
+    NAME: The name you want to give your deployment (e.g., nginx-deployment).
+    image: The container image to use (e.g., nginx:1.15.0).
+    --replicas: (Optional) The desired number of pod instances (default is 1).
+    --port: (Optional) The port the container exposes
+
+4. To create a deployment with name httpd and image httpd:latest we will use above example and change required options as per our need as shown in below command
+
+    kubectl create deployment httpd --image=httpd:latest --replicas=1 --port=8080
+
+5. The above command will create a deployment with name httpd and try to pull docker image httpd with tag latest. You can check deployment and pod using below commands
+
+    kubectl get deployment OR kubectl get deploy // This will list all the deployment in default namespace.
+
+    kubectl get pods // This will list all pods in default namespace.
+
+6. The second option is using declarative YAML file. Below is the example of YAML file which will have all required details. 
+
+    //YAML File content starts here
+
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: httpd
+    spec:
+      selector:
+        matchLabels:
+          app: httpd
+    replicas: 1 # Tells Kubernetes to run 1 instances of your app
+    template:
+      metadata:
+        labels:
+          app: httpd
+        spec:
+          containers:
+          - name: httpd
+            image: httpd:latest # Specify the container image
+            ports:
+            - containerPort: 8080
+
+    //YAML file content ends here
+
+7. We have to be cautious about the indentation of content under YAML file. Next, we will need to apply settings mentioned in above yAML file using below command.
+
+    kubectl apply -f deployment_file.yaml
+
+8. Once above kubectl command is executed, new deployment with name httpd will be created. You can view deployment and pod using below commands.
+
+    kubectl get deployment OR kubectl get deploy 
+
+    kubectl get pods
