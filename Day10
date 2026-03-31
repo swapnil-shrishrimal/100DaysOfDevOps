@@ -1,0 +1,31 @@
+# Day10
+
+Troubleshoot why mariadb service is not running on DB server and fix it. It is assumed that server is Linux based.
+
+Login into DB server using ssh 
+    ssh username@db_hostname
+Provide required password for authentication.
+
+Once logged in, check status of the mariadb service using below command
+
+    sudo systemctl status mariadb
+
+In the output we will get relevant information about error while starting service.
+	
+The error says directory /var/lib/mysql is not empty and because of this mariadb is unable to start.
+	
+When checked directory /var/lib/ then I could not see directory mysql.
+
+This could be due to possible data corruption or incorrect installation.
+	
+To overcome this, I tried fresh installation using below command
+	
+	sudo mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+	
+Post executing above command, I tried to start the mariadb using below command
+	
+	sudo systemctl start mariadb
+	
+The database started and it was also enabled, verified using below command
+	
+	sudo systemctl status mariadb
