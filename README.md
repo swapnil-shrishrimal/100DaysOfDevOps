@@ -9,5 +9,5 @@ Documenting my learning from day 1 to day 100 as part of 100 days of DevOps lear
 [Day7](Day7) : Password-less authentication using SSH    
 [Day8](Day8) : Install Ansible 4.9.0 using Pip3 for all users    
 [Day9](Day9) : Create a deployment named httpd to deploy the application httpd using the image httpd:latest (ensure to specify the tag)   
-[Day10](Day10) : Troubleshoot why mariadb service is unable to start and fix it. 
-[Day11](Day11) : Bash script to archive and copy archive file to remote sever.  
+[Day10](Day10) : Troubleshoot why mariadb service is unable to start and fix it.   
+[Day11](Day11) : Bash script to archive and copy archive file to remote sever.   
