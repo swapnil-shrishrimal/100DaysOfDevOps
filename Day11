@@ -1,0 +1,24 @@
+Day11
+#problem statement: To install tomcat server on Linux application server and deploy provided application. The deployed application should be accessible on port 6300 instead of default 8080 port.
+
+1.  Login into application server 1 using ssh, and provide password once prompted.
+            ssh username@hostname
+2. Install tomcat on server using below mentioned command
+            sudo yum install -y tomcat tomcat-webapps tomcat-admin-webapps
+3. Enable and start tomcat service
+            sudo systemctl enable tomcat
+            sudo systemctl start tomcat
+4. Check if tomcat service is started or failed using below command
+            sudo systemctl status tomcat
+5. If tomcat service is started then we are good to go for next steps
+6. As per instructions we need to make sure application to be deployed is accessible at port 6300. Hence, we would need to update settings.xml available under /etc/tomcat/ Also, we need to locate Connector element for HTTP/1.1. Once we have that, change it to use 6300 as a port. Below is the example for the reference
+            <Connector port="6300" protocol="HTTP/1.1"
+            connectionTimeout="20000"
+            redirectPort="8443" />                                                
+7. Save the settings.xml
+8. Next step is to copy/move artifact under /var/lib/tomcat/webapps/ directory.
+9. Make sure you don't have same name of file or directory in /var/lib/tomcat/webapps/ directory and if present remove it using rm command.
+10. Last step is to restart tomcat so that newly placed application will deployed
+            sudo systemctl restart tomcat
+11. Now our application is deployed on tomcat. To validate, use curl command from either jump server or another server in the domain.
+            curl http://hostname_of_server_where_tomcat_is_installed:6300            
