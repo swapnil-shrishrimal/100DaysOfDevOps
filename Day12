@@ -1,0 +1,37 @@
+Day12
+Problem statement: Troubleshoot why application deployed on one server is not accessible from Jump server. Application is using Apache webserver.
+
+1. First we will login into server on which this application is deployed using below command. Provide required password when prompted.
+        ssh username@hostname
+2. Let's check status of the Apache service using below command
+        sudo systemctl status httpd
+3. In ouptut, I found that service was not running. Hence, I tried to start service using below command. But, service could not start.
+        sudo systemctl start httpd.
+4. In the output of above command, I found that there was one error with "Address already in use"
+5. I tried to use netstat to investigate but netstat was not available or installed. Hence, installed using below command
+        sudo yum install net-tools -y
+6. Once installation was completed, tried below command to check which services is using particular port. As port 5002 was being assigned to application deployed on Apache webserver.
+        sudo netstat -tulpn | grep 5002        
+7. The output of above command confirmed that service sendmail was using same port instead of default port 25.
+8. I had edit sendmail.mc file under /etc/mail to configure port 25 using below command. This basically opens sendmail.mc file in editor and you will need to search port, update and then save the file.
+        sudo vi /etc/mail/sendmail.mc
+9. I restarted sendmail service using below service
+        sudo systemctl restart sendmail.
+10. I tried restarting httpd service using below command and service was in running state.
+        sudo systemctl restart httpd                
+11. However, but still application was not accessible from Jump server.
+12. To troubleshoot next, I tried to check firewalld service but it was not installed. Then, I checked iptables using below command
+        sudo iptables -L        
+13. The output of above command confirmed that there was some misconfiguration which was blocking traffic to port 5002. Below is the output for reference.
+
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+ACCEPT     all  --  anywhere             anywhere             state RELATED,ESTABLISHED
+ACCEPT     icmp --  anywhere             anywhere            
+ACCEPT     all  --  anywhere             anywhere            
+ACCEPT     tcp  --  anywhere             anywhere             state NEW tcp dpt:ssh
+REJECT     all  --  anywhere             anywhere             reject-with icmp-host-prohibited        
+14. This explained that traffic was blocked.
+15. I updated iptables to enable traffic on port 5002 using below command
+        sudo iptables -I INPUT 5 -p tcp --dport 5002 -j ACCEPT
+16. After this service was accessible from Jump server.        
