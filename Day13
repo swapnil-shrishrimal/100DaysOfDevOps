@@ -1,0 +1,48 @@
+Day13
+Problem statement: As of now application deployed on application server is accessible from outside world directly. Need to install iptables and associated services. Configure Iptables such that application deployed on application server is accessible only from loadbalancer and blocked for outside world if accessed through application server.
+1. Log in to the app server
+        ssh username@server
+
+2. Install iptables and the services package
+        yum install -y iptables iptables-services
+3. Once services are installed, start and enable the iptables using below commands. Using last command you can check the status of service
+        systemctl enable iptables
+        systemctl start iptables
+        systemctl status iptables        
+4. Before we move to next step, it is recommended to know what is IP of loadbalancer. To know IP, log in into loadbalancer server and use below command to get IP. (It is assumed that server is CentOS based)
+        cat /etc/hosts        
+5. The file hosts under /etc/ will provide you IP of loadbalancer.
+6. Next step is to apply iptables rule such that,
+        a. It allows incoming traffic only from Loadbalancer.
+        b. Blocks all other traffic if it's not from loadbalancer.
+7. For point #a we can use below iptables command. Let's assume port in this context is 5000
+        iptables -I INPUT 1 -p tcp --dport 5000 -s <Loadbalancer_IP> -j ACCEPT        
+    Let's get understanding of what option we have used in above command
+    -I INPUT 1: This inserts (-I) the rule into the INPUT chain at position 1 (the very top). By placing it first, you ensure that this rule is checked before any other rules.
+    -p tcp: Specifies that this rule applies only to TCP traffic.
+    --dport 5000: Targets traffic specifically destined for port 5000.
+    -s <Loadbalancer_IP>: Matches traffic only if the source (-s) IP address is your Load Balancer (LBR). You must replace <Loadbalancer_IP> with the actual IP address of your LBR.
+    -j ACCEPT: If the criteria match (TCP traffic on port 5000 coming from the LBR), the action is to ACCEPT the packet immediately.
+8. Now, let's see how to accomplish point #6 b
+        iptables -A INPUT -p tcp --dport 5000 -j DROP
+    -A INPUT: This appends (-A) the rule to the end of the INPUT chain
+    -p tcp --dport 5000: Again, matches any TCP traffic targeting port 5000
+    -j DROP: This tells iptables to silently discard any packets that reach this rule.
+9. Important points to remember while working with iptables
+
+    How they work together (The Logic)
+        Because your first rule (the ACCEPT rule) is at the top and the second rule (the DROP rule) is effectively placed below it, the firewall behaves like this:
+
+        Incoming packet hits the server on port 5000.
+
+        Check Rule 1: Is the packet from the LBR?
+
+            Yes: It is allowed in immediately. The process stops here.
+
+            No: It falls through to the next rule.
+
+        Check Rule 2: Is it trying to access port 5000?
+
+            Yes: Since it wasn't from the LBR, it hits the DROP rule and is blocked.
+
+    Note: If you did not put the ACCEPT rule at the top (or if you tried to add it later), the DROP rule would be processed first, blocking everyone—including your LBR—from accessing the application.

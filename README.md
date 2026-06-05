@@ -11,4 +11,5 @@ Documenting my learning from day 1 to day 100 as part of 100 days of DevOps lear
 [Day9](Day9) : Troubleshoot why mariadb service is not running on DB server   
 [Day10](Day10) : Linux Bash Scripts   
 [Day11](Day11) : Install and Configure Tomcat Server   
-[Day12](Day12) : Troubleshoot why application is not accessible from Jump server   
+[Day12](Day12) : Troubleshoot why application is not accessible from Jump server 
+[Day13](Day13) : IPtables Installation And Configuration     
