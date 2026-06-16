@@ -1,0 +1,19 @@
+Day14
+Problem statment: Apache (httpd) service is installed on all application server but on one server it is in failed state. Troubleshoot and fix issue with apache (httpd) service
+1. Login into application server using below command and provide password once prompted.
+        ssh username@host_name
+2. Once logged in, check status of httpd service using below command
+        sudo systemctl status httpd
+3. In my case, the service was failed with error "Address is already in use"                
+4. I tried to check if nestat utility is available but it wasn't.
+5. Tried installing netstat utility using below command
+        sudo yum install net-tools -y
+6. Tried to check which service is utilising same address / port using below command
+        sudo netstat -tulpn | grep 5001 // Port 5001 because httpd was using same port
+7. In output of above command, I got service name as sendmail service being using port 5001.
+8. It was misconfiguration for sendmail service hence updated port to 25 in file /etc/mail/sendmail.mc
+9. Restarted sendmail service using below command
+        sudo systemctl restart sendmail
+10. After this tried to restart httpd service using below command
+        sudo systemtctl restart httpd
+11. Service was able to start and issue was fixed.                                
