@@ -1,0 +1,31 @@
+Day14
+Problem statement: Setup SSL for Nginx (Install, configure and verify)
+
+1. Login into server where we need to install Nginx using ssh, provide password once prompted
+        ssh username@hostname
+2. Install nginx (Assumed it is CentOS) using below command
+        sudo yum install nginx -y
+3. It is assumed that we have .crt and .key file required for SSL.
+4. Move these files to /etc/nginx/ssl (create if directory not available) using below command
+        mv name_of_crt_file /etc/nginx/ssl
+        mv name_of_key_file /etc/nginx/ssl
+5. Create or overwrite the index.html file in the default Nginx document root
+        echo "Welcome!" > /usr/share/nginx/html/index.html
+6. Edit the Nginx configuration file (often located at /etc/nginx/nginx.conf or in /etc/nginx/conf.d/). You need to configure a server block to listen on port 443 with SSL enabled. (Note: If there is an existing server block for port 80, you may need to comment it out or adapt the configuration.)
+        server {
+                listen 443 ssl;
+                server_name server_name; # Or the appropriate hostname/IP
+
+                ssl_certificate /etc/nginx/ssl/name_of_crt_file.crt;
+                ssl_certificate_key /etc/nginx/ssl/name_of_key_file.key;
+
+        location / {
+        root /usr/share/nginx/html;
+        index index.html;
+        }
+    }
+7. Restart and enable nginx using below commands
+        systemctl restart nginx
+        systemctl enable nginx
+8. Verify using below curl command
+        curl -Ik https://hostname/        
