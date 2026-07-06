@@ -1,0 +1,40 @@
+Day16
+Problem statement: Setup Nginx as a load balancer and service response from other three application servers.
+
+1. Login into server where we need to install / configure nginx as a load balancer.
+
+2. Install nginx using below command
+        sudo yum install nginx -y   //Installation
+        sudo systemctl start nginx  // starting nginx
+        sudo systemctl enable nginx // Enable nginx so post restart of system nginx service is started.
+
+3. Configure nginx.conf. Open the configuration file using a text editor (e.g., sudo vi /etc/nginx/nginx.conf). You need to add an upstream block within the http context to define your application servers and then proxy traffic to them in a server block.
+
+4. Modify the file to look like this (replace app_server1, app_server2, app_server3 with their actual hostnames or IPs if needed, and ensure you include the correct port):
+        http {
+    # Define the upstream group
+    upstream myapp {
+        server app_server1.example.com:PORT_NUMBER;
+        server app_server2.example.com:PORT_NUMBER;
+        server app_server3.example.com:PORT_NUMBER;
+    }
+
+    server {
+        listen 80;
+
+        location / {
+            proxy_pass http://myapp;
+        }
+    }
+    # ... rest of the existing configuration ...
+    }
+
+5. Note: Verify the exact port your application servers are using by checking their internal configuration or running below command
+        netstat -tulpn | grep http on one of the app servers.
+
+6. Validate and Restart. After saving your changes, verify the syntax and reload Nginx to apply the configuration:
+        sudo nginx -t
+        sudo systemctl reload nginx
+
+7. Verification: Once configured, you can test the load balancing by running the following command in your terminal:
+        curl http://load_balancer_host:80
