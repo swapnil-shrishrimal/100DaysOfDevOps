@@ -15,4 +15,5 @@ Documenting my learning from day 1 to day 100 as part of 100 days of DevOps lear
 [Day13](Day13) : IPtables Installation And Configuration   
 [Day14](Day14) : Troubleshoot why apache (httpd) service is not up and running   
 [Day15](Day15) : Setup SSL for Nginx   
-[Day16](Day15) : Setup Nginx as load balancer (LBR)   
+[Day16](Day16) : Setup Nginx as load balancer (LBR)   
+[Day17](Day17) : Install and Configure PostgreSQL   

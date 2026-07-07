@@ -1,0 +1,14 @@
+Day17
+Problem statement: Install and Configure PostgreSQL
+1. Access the Database Server. From your current terminal, log in to the database server.
+        ssh username@hostname
+2. Access PostgreSQL. Once logged into the server, enter the PostgreSQL prompt. Since the service is already installed, you typically need to run this command as the postgres user:
+        sudo -u postgres psql
+3. Execute Database Commands. Inside the postgres=# prompt, execute the following SQL commands precisely. It is assumed that username and password are provided which needs to be set
+        CREATE USER user_to_be_created WITH PASSWORD 'actual_password';
+4. Create the database using below psql command
+        CREATE DATABASE name_of_database;        
+5. The newly created user needs to permission on database, hence we are going to execute below command
+        GRANT ALL PRIVILEGES ON DATABASE database_name TO user_name;        
+6. Verification: If you need to verify the creation, you can log in specifically as the new user after creation using below command
+        psql -U user_name -d database_name -h localhost.        
