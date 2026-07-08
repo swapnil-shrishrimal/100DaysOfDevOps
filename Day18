@@ -1,0 +1,24 @@
+Day18
+Problem statement: Install and Configure mariaDB on DB Server
+1. Access the Database Server. Login into DB server using ssh.
+2. Install and Configure MariaDB. Once logged into the database server, install the MariaDB server package using below command
+    sudo yum install mariadb-server -y
+    sudo systemctl start mariadb
+    sudo systemctl enable mariadb
+3. Configure Database and User. Log in to the MariaDB shell as root using below command
+    sudo mysql -u root
+4. Execute the following SQL commands to create the database, the user, and grant the required permissions:
+        #Create the database
+        CREATE DATABASE database_name;    
+        #Create the user and set the password
+        CREATE USER 'user_name'@'localhost' IDENTIFIED BY 'password_value';
+        #Grant full permissions to the user on the specific database
+        GRANT ALL PRIVILEGES ON database_name.* TO 'user_name'@'localhost';
+        #Apply the changes
+        FLUSH PRIVILEGES;
+        #Exit the shell
+        EXIT;
+5. Verification: You can verify the setup by logging in with the new user credentials:  
+        mysql -u user_name -pPASSWORD -e "SHOW DATABASES;"
+
+If you see newly created database in the list, the configuration is successful.
