@@ -1,0 +1,32 @@
+Day19
+#Problem statement: Install and Configure Web Application (static website). On /beta : beta version of app should be accessible and on /apps : normal app should be accessible. These should use port 3002
+
+1. Access the Target Server. First, log in to the app server
+      ssh username@hostname
+2. Install Apache (httpd). Install the Apache web server package:
+      sudo yum install httpd -y
+3. Configure Port 3002. Apache typically listens on port 80. You need to change this to 3002.
+
+Edit the main configuration file:
+
+      sudo vi /etc/httpd/conf/httpd.conf
+
+Locate the Listen 80 line and change it to:     
+
+      Listen 3002
+
+Save and exit (Esc, then :wq).
+4. Deploy Content and Configure Aliases. You need to copy the website content from jump server to the app server (It is assumed that, static website is available on jump server) and configure Apache to serve them from the specific paths.
+
+Copy the data: From your jump host, copy the directories to the app server:
+      scp -r /source/of/jump_server <user>@app_server:/var/www/html/beta
+      scp -r /source/of/jump_server <user>@app_server:/var/www/html/apps
+5. Configure Virtual Host/Alias: Ensure Apache knows how to serve these paths. Since you are using the root folder /var/www/html, the default Apache configuration usually handles subdirectories automatically. If not, you may need to add an Alias configuration in your httpd.conf or a separate file in /etc/httpd/conf.d/:   
+      Alias /beta /var/www/html/beta
+      Alias /apps /var/www/html/apps
+6. Start and Enable Apache. Ensure the service is running:      
+      sudo systemctl start httpd
+      sudo systemctl enable httpd
+7. Verification. Use curl on the app server to verify the configuration:      
+      curl http://localhost:3002/beta/
+      curl http://localhost:3002/apps/
