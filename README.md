@@ -18,3 +18,4 @@ Documenting my learning from day 1 to day 100 as part of 100 days of DevOps lear
 [Day16](Day16) : Setup Nginx as load balancer (LBR)   
 [Day17](Day17) : Install and Configure PostgreSQL   
 [Day18](Day18) : Install and Configure DB Server   
+[Day19](Day19) : Install and Configure Web Application  
