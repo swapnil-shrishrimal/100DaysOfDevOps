@@ -20,3 +20,4 @@ Documenting my learning from day 1 to day 100 as part of 100 days of DevOps lear
 [Day18](Day18) : Install and Configure DB Server   
 [Day19](Day19) : Install and Configure Web Application  
 [Day20](Day20) : Configure Nginx + PHP-FPM Using Unix Sock  
+[Day21](Day21) : Create bare git repository  
