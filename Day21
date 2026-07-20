@@ -1,0 +1,24 @@
+Day21
+Problem statement
+
+1. Create bare git repository.
+
+    1. To create bare git repository use below command
+
+            sudo git init --bare /name/of/repository
+
+Here are the main features and characteristics of a Bare Git Repository:
+
+No Working Directory: It does not contain a working tree or checked-out source code files. You cannot directly view, edit, or modify project files inside it.
+
+Version Control Metadata Only: The root of a bare repository directly contains what would normally sit inside the hidden .git folder—including objects, references (refs), commits, branches, and configuration files.
+
+Designed for Centralized Hosting: It is optimized to act as a central sharing hub or remote server repository (e.g., platforms like GitHub, GitLab, and Bitbucket host bare repositories).
+
+Safe Concurrent Pushing: Multiple developers can safely run git push to a bare repository without risking state conflicts or overwriting uncommitted working files on the server.
+
+Restricted Git Commands: Commands related to working trees (like git add, git commit, git checkout, or git status) cannot be executed inside a bare repository. Only transfer and history operations (like git push, git fetch, git clone, or git log) are supported.
+
+Storage Efficient: Since it doesn't store uncompressed local copies of project files alongside the Git database, it saves disk space on servers.
+
+Standard Naming Convention: Bare repository directories conventionally end with a .git suffix (for example, my-project.git).
