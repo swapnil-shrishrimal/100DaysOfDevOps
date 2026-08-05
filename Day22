@@ -1,0 +1,15 @@
+Day22
+Problem statement: Clone repository from another locally cloned repository.
+Bare repository is cloned at /opt/demo.git. This repository needs to be cloned at /usr/src/barerepos/
+
+1. Create required directory if it is not already present using below command
+
+        mkdir -p /usr/src/barerepos/
+
+2. Change directory using below command
+
+        cd /usr/src/barerepos/
+3. Clone required repository using below command
+
+        git clone /opt/demo.git
+4. This will clone existing repository demo.git in /usr/src/barerepos/ directory.        
