@@ -1,0 +1,63 @@
+Problem statement: What is Fork in Git repository
+
+1. Fork the Repository on the Hosting Platform
+    Since forking is a platform-level feature, you must first create the copy on your Git hosting provider.
+
+    Navigate to the original repository on your Git platform (e.g., GitHub, GitLab, Gitea).
+
+    Locate and click the Fork button (usually in the top-right corner of the repository page).
+
+2. Select your user account or namespace as the destination. This creates a complete copy of the repository under your account.
+
+2. Clone Your Fork Locally
+Once the fork exists on your account, you need to download it to your local machine to start working.
+
+    Copy the clone URL (HTTPS or SSH) from your newly forked repository.
+
+    Open your terminal and run the clone command:
+
+
+        git clone <URL-OF-YOUR-FORK>
+
+    Navigate into the new project directory:
+
+
+    cd <repository-name>
+
+3. Configure the "Upstream" Remote
+    To keep your fork synced with the original project in the future, you need to link your local repository to the original repository. In Git terminology, your fork is the origin, and the original repository is typically called upstream.
+
+    Grab the clone URL from the original repository (the one you forked from).
+
+    Add it as a new remote named upstream:
+
+    git remote add upstream <URL-OF-ORIGINAL-REPO>
+
+4. Verify Your Remotes
+    Ensure that both your fork (origin) and the original repository (upstream) are configured correctly.
+
+    Run the following command:
+
+        git remote -v
+
+    Expected Output: You should see two fetch/push URLs for origin (pointing to your fork) and two fetch/push URLs for upstream (pointing to the original repo).
+
+5. Keep Your Fork Updated (Ongoing)
+
+    As the original project progresses, your fork will fall behind. Whenever you need to sync the latest changes from the original repository into your local fork, use these steps:
+
+    Fetch the newest branches and commits from the original repository:
+
+        git fetch upstream
+
+    Switch to your local main branch (e.g., main or master):
+
+        git checkout main
+
+    Merge the changes from the original repository into your local branch:
+
+        git merge upstream/main
+
+    Push the updated local branch back up to your fork on the hosting platform:
+
+        git push origin main
